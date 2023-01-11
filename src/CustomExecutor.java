@@ -6,6 +6,8 @@ public class CustomExecutor<V>{
     private int maxPoolSize;
     private int currentMax;
 
+    private int newObject;
+
 
     /**
      * CustomExecutor constructor
