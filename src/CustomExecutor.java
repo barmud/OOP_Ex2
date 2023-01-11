@@ -2,9 +2,8 @@ import java.util.concurrent.*;
 
 public class CustomExecutor<V>{
     private static ThreadPoolExecutor threadpool;
-    private int minThreads;
-    private int maxThreads;
-    private PriorityBlockingQueue<Runnable> queue;
+    private int corePoolSize;
+    private int maxPoolSize;
     private int currentMax;
 
 
@@ -12,10 +11,10 @@ public class CustomExecutor<V>{
      * CustomExecutor constructor
      */
     public CustomExecutor() {
-        minThreads = Runtime.getRuntime().availableProcessors()/2;
-        maxThreads = Runtime.getRuntime().availableProcessors()-1;
-        queue = new PriorityBlockingQueue<Runnable>();
-        threadpool = new ThreadPoolExecutor(minThreads,maxThreads,300L, TimeUnit.MILLISECONDS,queue){
+        corePoolSize = Runtime.getRuntime().availableProcessors()/2;
+        maxPoolSize = Runtime.getRuntime().availableProcessors()-1;
+        PriorityBlockingQueue<Runnable> queue = new PriorityBlockingQueue<Runnable>();
+        threadpool = new ThreadPoolExecutor(corePoolSize, maxPoolSize,300L, TimeUnit.MILLISECONDS,queue){
 
             /**
              * Override ThreadPoolExecutor beforeExecute to update currentMax value when Thread extracts a new task from the queue
@@ -70,6 +69,26 @@ public class CustomExecutor<V>{
 
     public int getCurrenctMax() {
         return this.currentMax;
+    }
+
+    public int getCorePoolSize() {
+        return corePoolSize;
+    }
+
+    public void setCorePoolSize(int corePoolSize) {
+        this.corePoolSize = corePoolSize;
+    }
+
+    public int getMaxPoolSize() {
+        return maxPoolSize;
+    }
+
+    public void setMaxPoolSize(int maxPoolSize) {
+        this.maxPoolSize = maxPoolSize;
+    }
+
+    public int getCurrentMax() {
+        return currentMax;
     }
 
     /**

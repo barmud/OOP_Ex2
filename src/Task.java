@@ -5,7 +5,6 @@ public class Task<V> extends FutureTask<V> implements Callable<V>, Comparable<Ta
     private TaskType priority;
     private Callable<V> callable;
 
-    private V type;
 
     /**
      * Default constructor of Task
