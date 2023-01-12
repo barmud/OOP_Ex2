@@ -50,6 +50,11 @@ ThreadPool is reusing threads that have already been created instead of creating
 - threadpools often have mechanisms in place to manage and schedule the execution of tasks, which can also contribute to increased performance.
 
 
+### Hierarchical diagram :
+##
+![WhatsApp Image 2023-01-11 at 18 56 49](https://user-images.githubusercontent.com/118991774/212070364-54b0b494-4241-4f3b-bf2f-f82b9a3d5f9d.jpeg)
+
+
 # **************************************************
 
 # Ex2_2
@@ -87,7 +92,7 @@ This class extends ``FutureTask<V>`` and implements ``Callable<V>, Comparable<Ta
 - TaskType: This is an enumeration that represents the priority of the task. The lower the value the more important the task.
 
 ### Desgin patterns:
-#### factory desgin pattern:
+#### Factory desgin pattern:
 The purpose of this desgin pattern is allow to a creation of objects to be encapsulated within a factory, hiding the implementation details and making it easier to change the way objects are created without affecting the rest of the code.This will help the programmer that will use the class to avoid from knowing the complex API of the code.
 
 In our code :
@@ -100,23 +105,24 @@ In our code :
 ***note**: they are both public and static in order to use outside the class without needed object of the class. ``(Task.createTask(...))``*
 
 
-**Thad hide**: 
+**That hide**: 
 - ![image](https://user-images.githubusercontent.com/118991774/212048423-2bdaa3e6-c2f4-453f-be71-bdbd1be375e2.png)
 
 ***note**: the constructor is private in order that only the factory could create new ``Task``.*
 
-#### Solid:
+#### Solid Principles:
 
 Single Responsibility Principle: By using factory pattern, you can separate the responsibility of creating an object from the class that uses it, which follows the Single Responsibility Principle (SRP) of SOLID principles.
 
-
 ## CustomExecutor
 ### Overall:
+##
 Class that will refurbish ``ThreadPool`` by changeing his regular blocking queue to priority blocking queue and use ``Task`` in his queue instead of ``Callable`` or ``Runnable``. 
 
 This will allow to prioritize missions to accomplish.
 
 ### Class parameters:
+##
 - ``ThreadPoolExecutor threadpool``:  The ThreadPool that we will refurbish.
 - ``int corePoolSize``: The minimum amount of worker threads that can be used to execute tasks in parallel.
 - ``int maxPoolSize``: The maximum amount of worker threads that can be used to execute tasks in parallel.
@@ -124,19 +130,25 @@ This will allow to prioritize missions to accomplish.
 - ``int[] priorityArray``: This is array counter , each cell index represent the priority number and the value represnt how many task at the moment with priority number of the index wait for execute.
 
 ### Methods
+##
 - ``submitTask(Task<V> task)``: A factory method that takes a Task object, add the task priority to the priorityArray, and submits it to the thread pool for execution.
 - ``submit(Task task)``: Allows to submit a new task to the thread-pool using the factory method.
 - ``submit(Callable c,TaskType priority)``: allows to initialize a new task from a given Callable object and priority and submits it to the thread-pool using the factory method.
 - ``gracefullyTerminate()``: shut down the thread-pool and wait for all the threads to finish their work.
 
-### How to determine curretnMax
+### How to determine ``currentMax``
+##
 We want to get the current Maximum priority in O(1) without approach the queue of ThreadPool. 
 
 Therefore , when a new task execute we enter her num of priorrity to the priorityArray - happened at ``submitTask(Task<V> task)``.
 
 And we remove a task from the priorityArray through ``beforeExecute()`` function , this function allowed us to approach the Thread that assigned to execute the task , after he remove the task from the queue and still waiting before using ``call()`` to calculate her.
 
-***note**note : the beforeExecute method assumes that the priority queue is correctly updated with the correct priority values of the tasks in the queue due to ``compareTo()``.*
+***note** : the beforeExecute method assumes that the priority queue is correctly updated with the correct priority values of the tasks in the queue due to ``compareTo()``.*
+
+### Hierarchical diagram :
+##
+ ![WhatsApp Image 2023-01-11 at 18 56 04](https://user-images.githubusercontent.com/118991774/212070185-12e89398-82d9-4f87-bdc0-1b201238559d.jpeg)
 
 
 
