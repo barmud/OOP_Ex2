@@ -85,12 +85,13 @@ This class extends ``FutureTask<V>`` and implements ``Callable<V>, Comparable<Ta
 
 - We are use ``Comparable`` Interface to reuese certain behaviors in our code as adjusting the functinon ``CompareTo()`` to compare by value bettwen two ``Task`` objects.
 
-- We extends FutureTask to inherit all of the functionality provided by FutureTask for managing the execution and result of an asynchronous task. 
+- We extends FutureTask to inherit all of the functionality provided by FutureTask for managing the execution , important use in FutureTask is with ``RunnableFuture`` which is a Adapter desgin pattern. We extese about it in Desgian pattern in ``CustomExecutor`` section of explenation.
 ## Paramters
 - Callable<V>: This is the ``Callable`` object that is being executed by the task. It represents the task that will be executed and it's of generic type V representing the type of the result that the task will produce.
 - TaskType: This is an enumeration that represents the priority of the task. The lower the value the more important the task.
 
 ### Desgin patterns:
+##
 #### Factory desgin pattern:
 The purpose of this desgin pattern is allow to a creation of objects to be encapsulated within a factory, hiding the implementation details and making it easier to change the way objects are created without affecting the rest of the code.This will help the programmer that will use the class to avoid from knowing the complex API of the code.
 
@@ -144,6 +145,24 @@ Therefore , when a new task execute we enter her num of priorrity to the priorit
 And we remove a task from the priorityArray through ``beforeExecute()`` function , this function allowed us to approach the Thread that assigned to execute the task , after he remove the task from the queue and still waiting before using ``call()`` to calculate her.
 
 ***note** : the beforeExecute method assumes that the priority queue is correctly updated with the correct priority values of the tasks in the queue due to ``compareTo()``.*
+ 
+ ### Desgin patterns:
+ ##
+ #### Adapter: 
+"RunnableFuture" is an adapter interface that combines the "Runnable" and "Future" interfaces. It defines a single method "run()" which is implemented by the "FutureTask" class and it extends the functionality of the "Future" interface. 
+ 
+ A class that implements the "RunnableFuture" interface can be used as a "Runnable" and a "Future" at the same time. The "RunnableFuture" interface is used by the "CustomExecutor" class to represent the tasks that it executes.
+ 
+ The "ThreadPoolExecutor" class allows you to submit a task for execution by implementing "Runnable" or "Callable" interface. When a task is submitted to the "customExectuor", it wraps it in a "FutureTask" which implements both the "Runnable" and "Future" interfaces.
+ 
+ In our code :
+ - ![image](https://user-images.githubusercontent.com/118991774/212085856-b28bbe1d-020b-4f7a-9aa1-3f1d35207279.png)
+ 
+- ![image](https://user-images.githubusercontent.com/118991774/212085943-fd5d3cca-4ca3-4f99-9bc0-976b8a91c17a.png)
+ 
+ - ![image](https://user-images.githubusercontent.com/118991774/212086109-5df9ebc6-206a-4c22-9500-c904765fe333.png)
+
+
 
 ### UML diagram :
 ##
