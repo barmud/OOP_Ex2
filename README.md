@@ -86,7 +86,6 @@ This class extends ``FutureTask<V>`` and implements ``Callable<V>, Comparable<Ta
 - We are use ``Comparable`` Interface to reuese certain behaviors in our code as adjusting the functinon ``CompareTo()`` to compare by value bettwen two ``Task`` objects.
 
 - We extends FutureTask to inherit all of the functionality provided by FutureTask for managing the execution and result of an asynchronous task. 
-********!************FixMe******!*********FixMe******!*****************
 ## Paramters
 - Callable<V>: This is the ``Callable`` object that is being executed by the task. It represents the task that will be executed and it's of generic type V representing the type of the result that the task will produce.
 - TaskType: This is an enumeration that represents the priority of the task. The lower the value the more important the task.
