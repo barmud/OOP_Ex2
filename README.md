@@ -82,6 +82,9 @@ This class extends ``FutureTask<V>`` and implements ``Callable<V>, Comparable<Ta
 
 - We extends FutureTask to inherit all of the functionality provided by FutureTask for managing the execution and result of an asynchronous task. 
 ********!************FixMe******!*********FixMe******!*****************
+## Paramters
+- Callable<V>: This is the ``Callable`` object that is being executed by the task. It represents the task that will be executed and it's of generic type V representing the type of the result that the task will produce.
+- TaskType: This is an enumeration that represents the priority of the task. The lower the value the more important the task.
 
 ### Desgin patterns:
 #### factory desgin pattern:
@@ -125,6 +128,15 @@ This will allow to prioritize missions to accomplish.
 - ``submit(Task task)``: Allows to submit a new task to the thread-pool using the factory method.
 - ``submit(Callable c,TaskType priority)``: allows to initialize a new task from a given Callable object and priority and submits it to the thread-pool using the factory method.
 - ``gracefullyTerminate()``: shut down the thread-pool and wait for all the threads to finish their work.
+
+### How to determine curretnMax
+We want to get the current Maximum priority in O(1) without approach the queue of ThreadPool. 
+
+Therefore , when a new task execute we enter her num of priorrity to the priorityArray - happened at ``submitTask(Task<V> task)``.
+
+And we remove a task from the priorityArray through ``beforeExecute()`` function , this function allowed us to approach the Thread that assigned to execute the task , after he remove the task from the queue and still waiting before using ``call()`` to calculate her.
+
+***note**note : the beforeExecute method assumes that the priority queue is correctly updated with the correct priority values of the tasks in the queue due to ``compareTo()``.*
 
 
 
