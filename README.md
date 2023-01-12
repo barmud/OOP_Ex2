@@ -50,7 +50,7 @@ ThreadPool is reusing threads that have already been created instead of creating
 - threadpools often have mechanisms in place to manage and schedule the execution of tasks, which can also contribute to increased performance.
 
 
-### Hierarchical diagram :
+### UML diagram :
 ##
 ![WhatsApp Image 2023-01-11 at 18 56 49](https://user-images.githubusercontent.com/118991774/212070364-54b0b494-4241-4f3b-bf2f-f82b9a3d5f9d.jpeg)
 
@@ -145,7 +145,7 @@ And we remove a task from the priorityArray through ``beforeExecute()`` function
 
 ***note** : the beforeExecute method assumes that the priority queue is correctly updated with the correct priority values of the tasks in the queue due to ``compareTo()``.*
 
-### Hierarchical diagram :
+### UML diagram :
 ##
  ![WhatsApp Image 2023-01-11 at 18 56 04](https://user-images.githubusercontent.com/118991774/212070185-12e89398-82d9-4f87-bdc0-1b201238559d.jpeg)
 
