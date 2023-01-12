@@ -54,9 +54,6 @@ ThreadPool is reusing threads that have already been created instead of creating
 ##
 ![WhatsApp Image 2023-01-11 at 18 56 49](https://user-images.githubusercontent.com/118991774/212070364-54b0b494-4241-4f3b-bf2f-f82b9a3d5f9d.jpeg)
 
-
-# **************************************************
-
 # Ex2_2
 Part2 of the assigment.
 
