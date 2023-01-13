@@ -125,12 +125,13 @@ This will allow to prioritize missions to accomplish.
 - ``int maxPoolSize``: The maximum amount of worker threads that can be used to execute tasks in parallel.
 - ``int currentMax``: The priority num of the most important task at the moment.
 - ``int[] priorityArray``: This is array counter , each cell index represent the priority number and the value represnt how many task at the moment with priority number of the index wait for execute.
-
+- ``boolean flag``: a flag that been use at ``setCorePoolSize(...)`` , which help to sign the first time we find cell at ``priorityArray`` that isn't empty.
 ### Methods
 ##
 - ``submitTask(Task<V> task)``: A factory method that takes a Task object, add the task priority to the priorityArray, and submits it to the thread pool for execution.
 - ``submit(Task task)``: Allows to submit a new task to the thread-pool using the factory method.
 - ``submit(Callable c,TaskType priority)``: allows to initialize a new task from a given Callable object and priority and submits it to the thread-pool using the factory method.
+- ``setPriorityArray()``: this function only been called at ``beforeExecute()`` and her purpose is to update the priorityArray when new task execute , this function is synchronized due to the need that only one thread can decress the value of one of the cell at each time.
 - ``gracefullyTerminate()``: shut down the thread-pool and wait for all the threads to finish their work.
 
 ### How to determine ``currentMax``
@@ -140,6 +141,8 @@ We want to get the current Maximum priority in O(1) without approach the queue o
 Therefore , when a new task execute we enter her num of priorrity to the priorityArray - happened at ``submitTask(Task<V> task)``.
 
 And we remove a task from the priorityArray through ``beforeExecute()`` function , this function allowed us to approach the Thread that assigned to execute the task , after he remove the task from the queue and still waiting before using ``call()`` to calculate her.
+
+Function ``beforeExecute()`` is calling ``setPriorityArray()`` and those all the above , the reason we call this function is to make the function synchronized due to the need that only one thread can decress the value of one of the cell at each time.
 
 ***note** : the beforeExecute method assumes that the priority queue is correctly updated with the correct priority values of the tasks in the queue due to ``compareTo()``.*
  
